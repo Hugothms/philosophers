@@ -6,7 +6,7 @@
 /*   By: hthomas <hthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/25 15:53:40 by hthomas           #+#    #+#             */
-/*   Updated: 2021/05/01 20:48:57 by hthomas          ###   ########.fr       */
+/*   Updated: 2021/05/01 21:10:50 by hthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,12 +74,18 @@ int	init_data(t_data *data, int argc, char **argv)
 		data->philos[i].data = data;
 		sem_unlink("fork_semaphore");
 		data->fork = sem_open("fork_semaphore", 0644);
+		if (!data->fork)
+			return (0);
 		sem_unlink("die_or_eat_semaphore");
 		data->philos[i].is_dead_or_eating = sem_open("die_or_eat_semaphore", 0644);
+		if (!data->philos[i].is_dead_or_eating)
+			return (0);
 		i++;
 	}
 	sem_unlink("write_semaphore");
 	data->write_access = sem_open("write_semaphore", 0644);
+	if (!data->write_access)
+		return (0);
 	data->simulation_start = get_total_time();
 	return (1);
 }
