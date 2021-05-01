@@ -6,7 +6,7 @@
 /*   By: hthomas <hthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/25 15:53:40 by hthomas           #+#    #+#             */
-/*   Updated: 2021/04/30 12:44:46 by hthomas          ###   ########.fr       */
+/*   Updated: 2021/05/01 20:48:57 by hthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,11 +72,14 @@ int	init_data(t_data *data, int argc, char **argv)
 	{
 		ft_bzero(&data->philos[i], sizeof(t_philo));
 		data->philos[i].data = data;
-		pthread_mutex_init(&data->philos[i].fork, NULL);
-		pthread_mutex_init(&data->philos[i].is_dead_or_eating, NULL);
+		sem_unlink("fork_semaphore");
+		data->fork = sem_open("fork_semaphore", 0644);
+		sem_unlink("die_or_eat_semaphore");
+		data->philos[i].is_dead_or_eating = sem_open("die_or_eat_semaphore", 0644);
 		i++;
 	}
-	pthread_mutex_init(&data->write_access, NULL);
+	sem_unlink("write_semaphore");
+	data->write_access = sem_open("write_semaphore", 0644);
 	data->simulation_start = get_total_time();
 	return (1);
 }
@@ -88,8 +91,8 @@ void	free_data(t_data *data)
 	i = 0;
 	while (i < data->number_of_philos)
 	{
-		pthread_mutex_destroy(&data->philos[i].fork);
-		pthread_mutex_destroy(&data->philos[i].is_dead_or_eating);
+		sem_close(data->fork);
+		sem_close(data->philos[i].is_dead_or_eating);
 		i++;
 	}
 	free(data->philos);

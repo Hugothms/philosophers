@@ -6,7 +6,7 @@
 /*   By: hthomas <hthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 18:56:14 by hthomas           #+#    #+#             */
-/*   Updated: 2021/04/30 12:44:46 by hthomas          ###   ########.fr       */
+/*   Updated: 2021/04/30 13:15:41 by hthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define philo_two_H
 
 # include <pthread.h>
+# include <semaphore.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdio.h>
@@ -38,8 +39,7 @@ typedef struct s_philo
 	int				number_of_meal;
 	int				time_last_meal_started;
 	int				is_dead;
-	pthread_mutex_t	fork;
-	pthread_mutex_t	is_dead_or_eating;
+	sem_t			*is_dead_or_eating;
 	struct s_data	*data;
 }	t_philo;
 
@@ -51,7 +51,8 @@ typedef struct s_data
 	int				time_to_sleep;
 	int				number_must_eat;
 	t_philo			*philos;
-	pthread_mutex_t	write_access;
+	sem_t			*fork;
+	sem_t			*write_access;
 	long			simulation_start;
 }	t_data;
 
