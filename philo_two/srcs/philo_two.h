@@ -6,7 +6,7 @@
 /*   By: hthomas <hthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 18:56:14 by hthomas           #+#    #+#             */
-/*   Updated: 2021/05/03 10:27:07 by hthomas          ###   ########.fr       */
+/*   Updated: 2021/05/03 10:33:47 by hthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int		init_data(t_data *data, int argc, char **argv);
 int		get_time(t_data *data);
 long	get_total_time(void);
 void	ft_putnbr_fd(int n, int fd);
-void	release_forks(int philo_number, t_data *data);
+void	release_forks(t_data *data);
 void	take_forks(int philo_number, t_data *data);
 void	display_message(t_data *data, int philo_number, t_message message_type);
 void	monitor(t_data *data);

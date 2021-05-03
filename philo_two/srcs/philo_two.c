@@ -6,7 +6,7 @@
 /*   By: hthomas <hthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/17 20:41:07 by hthomas           #+#    #+#             */
-/*   Updated: 2021/05/03 10:24:12 by hthomas          ###   ########.fr       */
+/*   Updated: 2021/05/03 10:33:54 by hthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	philo_eat(t_data *data, int philo_number)
 	while (get_time(data) < time_to_end_eating)
 		usleep(10);
 	sem_post(data->philos[philo_number].is_dead_or_eating);
-	release_forks(philo_number, data);
+	release_forks(data);
 }
 
 static void	philo_sleep(t_data *data, int philo_number)

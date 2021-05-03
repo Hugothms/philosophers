@@ -6,7 +6,7 @@
 /*   By: hthomas <hthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/25 18:08:58 by hthomas           #+#    #+#             */
-/*   Updated: 2021/05/01 20:49:56 by hthomas          ###   ########.fr       */
+/*   Updated: 2021/05/03 10:33:38 by hthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,12 @@ void	take_forks(int philo_number, t_data *data)
 {
 	sem_wait(data->fork);
 	display_message(data, philo_number, TOOK_FORK);
-	if (philo_number == data->number_of_philos - 1)
-		sem_wait(data->fork);
-	else
-		sem_wait(data->fork);
+	sem_wait(data->fork);
 	display_message(data, philo_number, TOOK_FORK);
 }
 
-void	release_forks(int philo_number, t_data *data)
+void	release_forks(t_data *data)
 {
 	sem_post(data->fork);
-	if (philo_number == data->number_of_philos - 1)
-		sem_post(data->fork);
-	else
-		sem_post(data->fork);
+	sem_post(data->fork);
 }
