@@ -6,7 +6,7 @@
 /*   By: hthomas <hthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/25 15:53:40 by hthomas           #+#    #+#             */
-/*   Updated: 2021/05/01 21:10:50 by hthomas          ###   ########.fr       */
+/*   Updated: 2021/05/03 10:19:10 by hthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,30 +64,30 @@ int	init_data(t_data *data, int argc, char **argv)
 		data->number_must_eat = ft_atoi(argv[5]);
 	else
 		data->number_must_eat = 0;
+	sem_unlink("fork_semaphore");
+	data->fork = sem_open("fork_semaphore", O_CREAT, 0644, data->number_of_philos);
+	if (!data->fork)
+		return (KO);
 	data->philos = malloc(sizeof(t_philo) * data->number_of_philos);
 	if (data->philos == NULL)
-		return (0);
+		return (KO);
 	i = 0;
 	while (i < data->number_of_philos)
 	{
 		ft_bzero(&data->philos[i], sizeof(t_philo));
 		data->philos[i].data = data;
-		sem_unlink("fork_semaphore");
-		data->fork = sem_open("fork_semaphore", 0644);
-		if (!data->fork)
-			return (0);
 		sem_unlink("die_or_eat_semaphore");
-		data->philos[i].is_dead_or_eating = sem_open("die_or_eat_semaphore", 0644);
+		data->philos[i].is_dead_or_eating = sem_open("die_or_eat_semaphore", O_CREAT, 0644, 1);
 		if (!data->philos[i].is_dead_or_eating)
-			return (0);
+			return (KO);
 		i++;
 	}
 	sem_unlink("write_semaphore");
-	data->write_access = sem_open("write_semaphore", 0644);
+	data->write_access = sem_open("write_semaphore", O_CREAT, 0644, 1);
 	if (!data->write_access)
-		return (0);
+		return (KO);
 	data->simulation_start = get_total_time();
-	return (1);
+	return (OK);
 }
 
 void	free_data(t_data *data)

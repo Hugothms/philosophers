@@ -6,7 +6,7 @@
 /*   By: hthomas <hthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/21 16:25:17 by hthomas           #+#    #+#             */
-/*   Updated: 2021/04/30 12:44:46 by hthomas          ###   ########.fr       */
+/*   Updated: 2021/05/03 10:24:52 by hthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ static int	check_philo(t_philo *philo)
 	{
 		display_message(philo->data, philo->philo_number, IS_DEAD);
 		philo->is_dead = 1;
-		pthread_mutex_lock(&philo->is_dead_or_eating);
-		return (0);
+		sem_post(philo->is_dead_or_eating);
+		return (KO);
 	}
-	return (1);
+	return (OK);
 }
 
 void	monitor(t_data *data)

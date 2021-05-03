@@ -6,7 +6,7 @@
 /*   By: hthomas <hthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 18:56:14 by hthomas           #+#    #+#             */
-/*   Updated: 2021/04/30 13:15:41 by hthomas          ###   ########.fr       */
+/*   Updated: 2021/05/03 10:27:07 by hthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 # include <sys/time.h>
 # include <limits.h>
 
+# define OK 1
+# define KO 0
 typedef enum e_message
 {
 	TOOK_FORK,

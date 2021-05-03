@@ -6,7 +6,7 @@
 /*   By: hthomas <hthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/17 20:41:07 by hthomas           #+#    #+#             */
-/*   Updated: 2021/04/30 12:40:08 by hthomas          ###   ########.fr       */
+/*   Updated: 2021/05/03 10:21:30 by hthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ static int	start_philos(t_data *data)
 		usleep(1000);
 		i++;
 	}
-	return (1);
+	return (OK);
 }
 
 int	main(int argc, char **argv)

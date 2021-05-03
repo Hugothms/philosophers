@@ -6,7 +6,7 @@
 /*   By: hthomas <hthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/25 15:53:40 by hthomas           #+#    #+#             */
-/*   Updated: 2021/04/30 12:30:13 by hthomas          ###   ########.fr       */
+/*   Updated: 2021/05/03 10:21:15 by hthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	init_data(t_data *data, int argc, char **argv)
 		data->number_must_eat = 0;
 	data->philos = malloc(sizeof(t_philo) * data->number_of_philos);
 	if (data->philos == NULL)
-		return (0);
+		return (KO);
 	i = 0;
 	while (i < data->number_of_philos)
 	{

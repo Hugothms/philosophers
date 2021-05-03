@@ -6,7 +6,7 @@
 /*   By: hthomas <hthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 16:29:00 by hthomas           #+#    #+#             */
-/*   Updated: 2021/04/30 12:29:41 by hthomas          ###   ########.fr       */
+/*   Updated: 2021/05/03 10:21:30 by hthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,5 +19,5 @@ int	exit_error(const char *str)
 		write(2, str, 1);
 		str++;
 	}
-	return (1);
+	return (OK);
 }

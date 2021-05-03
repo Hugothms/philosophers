@@ -6,7 +6,7 @@
 /*   By: hthomas <hthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 20:06:55 by hthomas           #+#    #+#             */
-/*   Updated: 2021/04/29 14:19:59 by hthomas          ###   ########.fr       */
+/*   Updated: 2021/05/03 10:21:30 by hthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ static int	is_number(char *str)
 	while (*str)
 	{
 		if (*str < '0' || *str++ > '9')
-			return (0);
+			return (KO);
 	}
-	return (1);
+	return (OK);
 }
 
 int	check_args(int argc, char **argv)
@@ -30,8 +30,8 @@ int	check_args(int argc, char **argv)
 	while (i < argc)
 	{
 		if (!is_number(argv[i]))
-			return (0);
+			return (KO);
 		i++;
 	}
-	return (1);
+	return (OK);
 }
