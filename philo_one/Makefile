@@ -6,59 +6,56 @@
 #    By: hthomas <hthomas@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/08 17:53:33 by hthomas           #+#    #+#              #
-#    Updated: 2021/04/30 12:13:08 by hthomas          ###   ########.fr        #
+#    Updated: 2021/05/03 11:54:23 by hthomas          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-.SUFFIXES:
-.SUFFIXES: .c .o
+# .SUFFIXES: .c .o
 
-SHELL		= /bin/sh
+NAME	=		philo_one
 
-NAME		= philo_one
+SHELL	=		/bin/sh
+CC		=		clang
+RM		=		rm -f
 
-OBJSDIR		= build/
+CFLAGS	=		-Wall -Wextra -Werror
+LDFLAGS	=		#-fsanitize=address -g3
+THREADFLAGS	=	-pthread
 
-SRCSDIR		= srcs/
+SRCSDIR	=		srcs/
+SRCS	=		philo_one.c \
+				check_args.c \
+				messages.c \
+				exit.c \
+				utils.c \
+				fork.c \
+				monitor.c \
+				time.c
 
-SRCS		= \
-			  philo_one.c \
-			  check_args.c \
-			  messages.c \
-			  exit.c \
-			  utils.c \
-			  fork.c \
-			  monitor.c \
-			  time.c
+OBJSDIR	=		build/
+OBJS	=		$(addprefix $(OBJSDIR), $(SRCS:%.c=%.o))
 
-OBJS		= $(addprefix $(OBJSDIR), $(SRCS:%.c=%.o))
+HEADER	=		$(SRCSDIR)philo_one.h
 
-CC			= clang
-RM			= rm -f
-
-CFLAGS		= -Wall -Wextra -Werror -g3
-LDFLAGS		= #-fsanitize=address
-
-THREADFLAGS	= -pthread
 
 all:	$(NAME)
 
-$(OBJSDIR)%.o : $(SRCSDIR)%.c
-		mkdir -p build
-		$(CC) $(CFLAGS) $(LDFLAGS) -c $< -o $@
+$(OBJSDIR)%.o:	$(SRCSDIR)%.c $(HEADER)
+	@mkdir -p build
+	$(CC) $(CFLAGS) $(LDFLAGS) -c $< -o $@
 
-$(NAME): $(OBJS)
-		$(CC) $(OBJS) $(CFLAGS) $(LDFLAGS) $(THREADFLAGS) -o $(NAME)
+$(NAME):	$(OBJS)
+	$(CC) $(CFLAGS) $(LDFLAGS) $(THREADFLAGS) $(OBJS) -o $@
 
 clean:
-		$(RM) $(OBJS)
+	$(RM) $(OBJS)
 
 
 fclean:	clean
-		$(RM) $(NAME)
+	$(RM) $(NAME)
 
 re:		fclean
 	make all
 
-.PHONY : all clean fclean re
+.PHONY:	all clean fclean re
 .SILENT:
