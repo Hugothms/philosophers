@@ -6,7 +6,7 @@
 /*   By: hthomas <hthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/25 15:53:40 by hthomas           #+#    #+#             */
-/*   Updated: 2021/05/03 10:21:15 by hthomas          ###   ########.fr       */
+/*   Updated: 2021/05/03 10:38:51 by hthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 void	ft_bzero(void *s, size_t n)
 {
 	unsigned int	i;
-	char			*s_c;
+	char			*str;
 
-	s_c = (char *)s;
+	str = (char *)s;
 	i = 0;
 	while (i < n)
 	{
-		*(s_c + i) = 0;
+		*(str + i) = 0;
 		i++;
 	}
 }
@@ -43,13 +43,12 @@ static int	ft_atoi(const char *str)
 		if (str[i++] == '-')
 			sign = -1;
 	}
-	while (str[i] && str[i] >= '0' && str[i] <= '9')
+	while (str[i] >= '0' && str[i] <= '9')
 	{
 		result *= 10;
 		result += str[i++] - '0';
 	}
-	result *= sign;
-	return (result);
+	return (result * sign);
 }
 
 int	init_data(t_data *data, int argc, char **argv)
