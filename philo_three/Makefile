@@ -6,11 +6,12 @@
 #    By: hthomas <hthomas@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/08 17:53:33 by hthomas           #+#    #+#              #
-#    Updated: 2021/05/03 11:53:59 by hthomas          ###   ########.fr        #
+#    Updated: 2021/05/03 11:58:52 by hthomas          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-# .SUFFIXES: .c .o
+.SUFFIXES:
+.SUFFIXES: .c .o
 
 NAME	=		philo_three
 
