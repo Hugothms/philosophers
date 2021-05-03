@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo_three.c                                        :+:      :+:    :+:   */
+/*   philo_three.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hthomas <hthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/17 20:41:07 by hthomas           #+#    #+#             */
-/*   Updated: 2021/05/03 10:33:54 by hthomas          ###   ########.fr       */
+/*   Updated: 2021/05/03 12:14:43 by hthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ static int	start_philos(t_data *data)
 	while (i < data->number_of_philos)
 	{
 		data->philos[i].philo_number = i;
+		// fork();
 		pthread_create(&(data->philos[i].tid), NULL, &philo,
 			&(data->philos[i]));
 		usleep(1000);
