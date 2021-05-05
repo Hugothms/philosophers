@@ -6,7 +6,7 @@
 /*   By: hthomas <hthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 18:56:14 by hthomas           #+#    #+#             */
-/*   Updated: 2021/05/03 12:21:34 by hthomas          ###   ########.fr       */
+/*   Updated: 2021/05/04 09:37:32 by hthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,11 @@
 
 # define OK 1
 # define KO 0
+
+# define DIE_EAT_SEMAPHORE "die_eat_semaphore"
+# define FORK_SEMAPHORE "fork_semaphore"
+# define OUTPUT_SEMAPHORE "output_semaphore"
+# define DEATH_SEMAPHORE "death_semaphore"
 
 typedef enum e_message
 {
@@ -56,7 +61,7 @@ typedef struct s_data
 	t_msec			time_to_sleep;
 	int				number_must_eat;
 	t_philo			*philos;
-	pthread_mutex_t	write_access;
+	pthread_mutex_t	output;
 	t_msec			simulation_start;
 }	t_data;
 

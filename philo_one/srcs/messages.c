@@ -6,7 +6,7 @@
 /*   By: hthomas <hthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/25 17:56:10 by hthomas           #+#    #+#             */
-/*   Updated: 2021/05/03 10:36:20 by hthomas          ###   ########.fr       */
+/*   Updated: 2021/05/04 09:33:40 by hthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	display_message(t_data *data, int philo_number, t_message message_type)
 {
-	pthread_mutex_lock(&data->write_access);
+	pthread_mutex_lock(&data->output);
 	if (message_type == TOOK_FORK)
 		printf("%d\t%d %s",
 			get_time(data), philo_number, "has taken a fork\n");
@@ -30,5 +30,5 @@ void	display_message(t_data *data, int philo_number, t_message message_type)
 	else if (message_type == IS_DEAD)
 		printf("%d\t%d %s", get_time(data), philo_number, "died\n");
 	if (message_type != IS_DEAD)
-		pthread_mutex_unlock(&data->write_access);
+		pthread_mutex_unlock(&data->output);
 }

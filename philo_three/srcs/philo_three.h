@@ -21,9 +21,16 @@
 # include <stdio.h>
 # include <sys/time.h>
 # include <limits.h>
+# include <signal.h>
+
 
 # define OK 1
 # define KO 0
+
+# define DIE_EAT_SEMAPHORE "die_eat_semaphore"
+# define FORK_SEMAPHORE "fork_semaphore"
+# define OUTPUT_SEMAPHORE "output_semaphore"
+# define DEATH_SEMAPHORE "death_semaphore"
 
 typedef enum e_message
 {
@@ -55,15 +62,17 @@ typedef struct s_data
 	t_msec			time_to_eat;
 	t_msec			time_to_sleep;
 	int				number_must_eat;
-	t_philo			*philos;
+	t_philo			*philo;
+	pid_t			*pids;
 	sem_t			*fork;
-	sem_t			*write_access;
+	sem_t			*output;
+	sem_t			*death;
 	t_msec			simulation_start;
 }	t_data;
 
-int		exit_error(const char *str);
-int		check_args(int argc, char **argv);
-int		init_data(t_data *data, int argc, char **argv);
+int		exit_error(const char *str, t_data *data);
+bool	check_args(int argc, char **argv);
+bool	init_data(t_data *data, int argc, char **argv);
 t_msec	get_time(t_data *data);
 t_msec	get_total_time(void);
 void	ft_putnbr_fd(int n, int fd);

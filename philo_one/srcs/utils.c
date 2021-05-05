@@ -6,7 +6,7 @@
 /*   By: hthomas <hthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/25 15:53:40 by hthomas           #+#    #+#             */
-/*   Updated: 2021/05/03 10:38:51 by hthomas          ###   ########.fr       */
+/*   Updated: 2021/05/04 09:33:40 by hthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	init_data(t_data *data, int argc, char **argv)
 		pthread_mutex_init(&data->philos[i].is_dead_or_eating, NULL);
 		i++;
 	}
-	pthread_mutex_init(&data->write_access, NULL);
+	pthread_mutex_init(&data->output, NULL);
 	data->simulation_start = get_total_time();
 	return (1);
 }

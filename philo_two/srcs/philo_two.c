@@ -6,7 +6,7 @@
 /*   By: hthomas <hthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/17 20:41:07 by hthomas           #+#    #+#             */
-/*   Updated: 2021/05/03 10:33:54 by hthomas          ###   ########.fr       */
+/*   Updated: 2021/05/04 10:48:32 by hthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	philo_eat(t_data *data, int philo_number)
 	data->philos[philo_number].time_last_meal_started = get_time(data);
 	time_to_end_eating = data->philos[philo_number].time_last_meal_started
 		+ data->time_to_eat;
-	sem_post(data->philos[philo_number].is_dead_or_eating);
+	sem_wait(data->philos[philo_number].is_dead_or_eating);
 	while (get_time(data) < time_to_end_eating)
 		usleep(10);
 	sem_post(data->philos[philo_number].is_dead_or_eating);
