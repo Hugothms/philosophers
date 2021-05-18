@@ -23,10 +23,6 @@
 # include <limits.h>
 # include <signal.h>
 
-
-# define OK 1
-# define KO 0
-
 # define DIE_EAT_SEMAPHORE "die_eat_semaphore"
 # define FORK_SEMAPHORE "fork_semaphore"
 # define OUTPUT_SEMAPHORE "output_semaphore"
@@ -81,5 +77,6 @@ void	take_forks(int philo_number, t_data *data);
 void	display_message(t_data *data, int philo_number, t_message message_type);
 void	monitor(t_data *data);
 void	free_data(t_data *data);
+bool	check_philo(t_philo *philo);
 
 #endif

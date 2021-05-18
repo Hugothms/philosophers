@@ -6,7 +6,7 @@
 /*   By: hthomas <hthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/17 20:41:07 by hthomas           #+#    #+#             */
-/*   Updated: 2021/05/04 18:48:02 by hthomas          ###   ########.fr       */
+/*   Updated: 2021/05/18 12:41:36 by hthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,21 +43,18 @@ static void	*philo(t_philo *philo)
 {
 	while (1)
 	{
+		while (nbfork < 2)
+			check_philo();
 		philo_eat(philo->data, philo->philo_number);
 		if (philo->data->number_must_eat != 0
 			&& philo->number_of_meal == philo->data->number_must_eat)
-			return (NULL);
-		printf("time last meal %d: %d\n", philo->philo_number, philo->time_last_meal_started);
-		if (philo->time_last_meal_started + philo->data->time_to_die
-		< get_time(philo->data))
 		{
-			display_message(philo->data, philo->philo_number, IS_DEAD);
 			sem_post(philo->data->death);
 			sem_post(philo->is_dead_or_eating);
-			return (false);
-		}
-		if (philo->)
 			return (NULL);
+		}
+		// printf("philo %d: %d < %d - %d\n", philo->philo_number, philo->data->time_to_die, get_time(philo->data), philo->time_last_meal_started);
+		check_philo(philo);
 		philo_sleep(philo->data, philo->philo_number);
 		display_message(philo->data, philo->philo_number, IS_THINKING);
 	}
@@ -65,13 +62,12 @@ static void	*philo(t_philo *philo)
 
 static bool	start_philos(t_data *data, int count)
 {
-
 	data->pids[count] = fork();
 	if (data->pids[count] == -1)
 		return (false);
 	else if (data->pids[count] == 0)
 	{
-		data->philo->philo_number = count;
+		data->philo->philo_number = data->number_of_philos - count;
 		philo(data->philo);
 	}
 	else if (count > 0)
@@ -97,10 +93,12 @@ int	main(int argc, char **argv)
 		return (exit_error("Error: invalid arguments.\n", NULL));
 	if (!init_data(&data, argc, argv))
 		return (exit_error("Error: cannot allocate memory.", &data));
-	if (!start_philos(&data, data.number_of_philos))
+	if (!start_philos(&data, data.number_of_philos - 1))
 		return (exit_error("Error: cannot start threads.\n", &data));
-	monitor(&data);
-	usleep(10000);
+	// monitor(data);
+	// printf("before:%d\n", data.number_of_philos);
+	sem_wait(data.death);
+	// printf("after:%d\n", data.number_of_philos);
 	free_data(&data);
 	return (0);
 }

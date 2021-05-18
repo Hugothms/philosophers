@@ -1,0 +1,10 @@
+while (g_forks.status <= 2)
+		if (check_status(philo))
+			return (0);
+	sem_wait(g_forks.forks);
+	sem_wait(g_forks.forks);
+	g_forks.status--;
+	g_forks.status--;
+	display_status(philo->id, FORK);
+	display_status(philo->id, FORK);
+	return (1);
