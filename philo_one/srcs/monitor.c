@@ -6,7 +6,7 @@
 /*   By: hthomas <hthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/21 16:25:17 by hthomas           #+#    #+#             */
-/*   Updated: 2021/05/03 12:24:45 by hthomas          ###   ########.fr       */
+/*   Updated: 2021/05/18 11:40:43 by hthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 
 static int	check_philo(t_philo *philo)
 {
-	if (philo->time_last_meal_started + philo->data->time_to_die
-		< get_time(philo->data))
+	if (philo->data->time_to_die < get_time(philo->data) - philo->time_last_meal_started)
 	{
 		display_message(philo->data, philo->philo_number, IS_DEAD);
 		philo->is_dead = true;
