@@ -6,7 +6,7 @@
 /*   By: hthomas <hthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/25 15:53:40 by hthomas           #+#    #+#             */
-/*   Updated: 2021/05/18 10:28:22 by hthomas          ###   ########.fr       */
+/*   Updated: 2021/05/20 10:57:21 by hthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,10 @@ void	free_data(t_data *data)
 	{
 		sem_close(data->fork);
 		sem_close(data->philo->is_dead_or_eating);
+		sem_close(data->output);
+		sem_close(data->death);
 		i++;
 	}
-	// free(data->philo);
+	free(data->philo);
+	free(data->pids);
 }

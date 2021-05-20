@@ -6,7 +6,7 @@
 /*   By: hthomas <hthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/17 20:41:07 by hthomas           #+#    #+#             */
-/*   Updated: 2021/05/18 15:31:08 by hthomas          ###   ########.fr       */
+/*   Updated: 2021/05/20 10:55:23 by hthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static void	philo_eat(t_data *data, int philo_number)
 {
 	int	time_to_end_eating;
 
-	take_forks(philo_number + 1, data);
+	take_forks(philo_number, data);
 	display_message(data, philo_number, IS_EATING);
 	data->philo->number_of_meal++;
 	data->philo->time_last_meal_started = get_time(data);
@@ -29,33 +29,32 @@ static void	philo_eat(t_data *data, int philo_number)
 	release_forks(data);
 }
 
-static void	philo_sleep(t_data *data, int philo_number)
+static void	philo_sleep(t_philo *philo, int philo_number)
 {
 	int	time_to_end_sleeping;
 
-	display_message(data, philo_number, IS_SLEEPING);
-	time_to_end_sleeping = get_time(data) + data->time_to_sleep;
-	while (get_time(data) < time_to_end_sleeping)
+	display_message(philo->data, philo_number, IS_SLEEPING);
+	time_to_end_sleeping = get_time(philo->data) + philo->data->time_to_sleep;
+	while (get_time(philo->data) < time_to_end_sleeping)
+	{
+		check_philo(philo);
 		usleep(10);
+	}
 }
 
 static void	*philo(t_philo *philo)
 {
 	while (1)
 	{
-		// while (nbfork < 2)
-		// 	check_philo();
 		philo_eat(philo->data, philo->philo_number);
 		if (philo->data->number_must_eat != 0
 			&& philo->number_of_meal == philo->data->number_must_eat)
 		{
-			sem_post(philo->data->death);
-			sem_post(philo->is_dead_or_eating);
+			// sem_post(philo->data->death);
+			// sem_post(philo->is_dead_or_eating);
 			return (NULL);
 		}
-		// printf("philo %d: %d < %d - %d\n", philo->philo_number, philo->data->time_to_die, get_time(philo->data), philo->time_last_meal_started);
-		check_philo(philo);
-		philo_sleep(philo->data, philo->philo_number);
+		philo_sleep(philo, philo->philo_number);
 		display_message(philo->data, philo->philo_number, IS_THINKING);
 	}
 }
@@ -96,9 +95,7 @@ int	main(int argc, char **argv)
 	if (!start_philos(&data, data.number_of_philos - 1))
 		return (exit_error("Error: cannot start threads.\n", &data));
 	// monitor(data);
-	// printf("before:%d\n", data.number_of_philos);
 	sem_wait(data.death);
-	// printf("after:%d\n", data.number_of_philos);
 	free_data(&data);
 	return (0);
 }
