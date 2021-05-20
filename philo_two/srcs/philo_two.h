@@ -6,12 +6,12 @@
 /*   By: hthomas <hthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 18:56:14 by hthomas           #+#    #+#             */
-/*   Updated: 2021/05/04 09:37:32 by hthomas          ###   ########.fr       */
+/*   Updated: 2021/05/20 11:02:56 by hthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef philo_two_H
-# define philo_two_H
+#ifndef PHILO_TWO_H
+# define PHILO_TWO_H
 
 # include <stdbool.h>
 # include <pthread.h>

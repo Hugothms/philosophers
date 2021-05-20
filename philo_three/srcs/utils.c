@@ -6,7 +6,7 @@
 /*   By: hthomas <hthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/25 15:53:40 by hthomas           #+#    #+#             */
-/*   Updated: 2021/05/20 10:57:21 by hthomas          ###   ########.fr       */
+/*   Updated: 2021/05/20 11:06:01 by hthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,8 @@ bool	init_data(t_data *data, int argc, char **argv)
 		ft_bzero(data->philo, sizeof(*data->philo));
 		data->philo->data = data;
 		sem_unlink(DIE_EAT_SEMAPHORE);
-		data->philo->is_dead_or_eating = sem_open(DIE_EAT_SEMAPHORE, O_CREAT, 0644, 1);
+		data->philo->is_dead_or_eating = sem_open(DIE_EAT_SEMAPHORE, O_CREAT,
+				0644, 1);
 		if (!data->philo->is_dead_or_eating)
 			return (false);
 		i++;
@@ -81,7 +82,8 @@ bool	init_data(t_data *data, int argc, char **argv)
 	if (!data->pids)
 		return (false);
 	sem_unlink(FORK_SEMAPHORE);
-	data->fork = sem_open(FORK_SEMAPHORE, O_CREAT, 0644, data->number_of_philos);
+	data->fork = sem_open(FORK_SEMAPHORE, O_CREAT,
+			0644, data->number_of_philos);
 	if (!data->fork)
 		return (false);
 	sem_unlink(OUTPUT_SEMAPHORE);

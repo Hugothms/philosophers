@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo_three.h                                        :+:      :+:    :+:   */
+/*   philo_three.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hthomas <hthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 18:56:14 by hthomas           #+#    #+#             */
-/*   Updated: 2021/05/03 10:33:47 by hthomas          ###   ########.fr       */
+/*   Updated: 2021/05/20 11:08:05 by hthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,8 @@ t_msec	get_total_time(void);
 void	ft_putnbr_fd(int n, int fd);
 void	release_forks(t_data *data);
 void	take_forks(int philo_number, t_data *data);
-void	display_message(t_data *data, int philo_number, t_message message_type);
+void	display_message(t_data *data, int philo_number,
+			t_message message_type);
 void	monitor(t_data *data);
 void	free_data(t_data *data);
 bool	check_philo(t_philo *philo);
