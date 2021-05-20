@@ -6,7 +6,7 @@
 /*   By: hthomas <hthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/25 15:53:40 by hthomas           #+#    #+#             */
-/*   Updated: 2021/05/20 11:06:01 by hthomas          ###   ########.fr       */
+/*   Updated: 2021/05/20 14:03:29 by hthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,33 +51,8 @@ static int	ft_atoi(const char *str)
 	return (result * sign);
 }
 
-bool	init_data(t_data *data, int argc, char **argv)
+bool	malloc_semaphores(t_data *data)
 {
-	int	i;
-
-	data->number_of_philos = ft_atoi(argv[1]);
-	data->time_to_die = ft_atoi(argv[2]);
-	data->time_to_eat = ft_atoi(argv[3]);
-	data->time_to_sleep = ft_atoi(argv[4]);
-	if (argc == 6)
-		data->number_must_eat = ft_atoi(argv[5]);
-	else
-		data->number_must_eat = 0;
-	data->philo = malloc(sizeof(*data->philo));
-	if (data->philo == NULL)
-		return (false);
-	i = 0;
-	while (i < data->number_of_philos)
-	{
-		ft_bzero(data->philo, sizeof(*data->philo));
-		data->philo->data = data;
-		sem_unlink(DIE_EAT_SEMAPHORE);
-		data->philo->is_dead_or_eating = sem_open(DIE_EAT_SEMAPHORE, O_CREAT,
-				0644, 1);
-		if (!data->philo->is_dead_or_eating)
-			return (false);
-		i++;
-	}
 	data->pids = malloc(sizeof(*data->pids) * data->number_of_philos);
 	if (!data->pids)
 		return (false);
@@ -96,6 +71,35 @@ bool	init_data(t_data *data, int argc, char **argv)
 		return (false);
 	data->simulation_start = get_total_time();
 	return (true);
+}
+
+bool	init_data(t_data *data, int argc, char **argv)
+{
+	int	i;
+
+	data->number_of_philos = ft_atoi(argv[1]);
+	data->time_to_die = ft_atoi(argv[2]);
+	data->time_to_eat = ft_atoi(argv[3]);
+	data->time_to_sleep = ft_atoi(argv[4]);
+	if (argc == 6)
+		data->number_must_eat = ft_atoi(argv[5]);
+	else
+		data->number_must_eat = 0;
+	data->philo = malloc(sizeof(*data->philo));
+	if (data->philo == NULL)
+		return (false);
+	i = 0;
+	while (i++ < data->number_of_philos)
+	{
+		ft_bzero(data->philo, sizeof(*data->philo));
+		data->philo->data = data;
+		sem_unlink(DIE_EAT_SEMAPHORE);
+		data->philo->is_dead_or_eating = sem_open(DIE_EAT_SEMAPHORE, O_CREAT,
+				0644, 1);
+		if (!data->philo->is_dead_or_eating)
+			return (false);
+	}
+	return (malloc_semaphores(data));
 }
 
 void	free_data(t_data *data)

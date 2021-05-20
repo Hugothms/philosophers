@@ -6,7 +6,7 @@
 /*   By: hthomas <hthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/17 20:41:07 by hthomas           #+#    #+#             */
-/*   Updated: 2021/05/20 10:55:23 by hthomas          ###   ########.fr       */
+/*   Updated: 2021/05/20 13:57:52 by hthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,7 @@ static void	*philo(t_philo *philo)
 		if (philo->data->number_must_eat != 0
 			&& philo->number_of_meal == philo->data->number_must_eat)
 		{
-			// sem_post(philo->data->death);
-			// sem_post(philo->is_dead_or_eating);
+			sem_post(philo->data->death);
 			return (NULL);
 		}
 		philo_sleep(philo, philo->philo_number);
@@ -94,7 +93,6 @@ int	main(int argc, char **argv)
 		return (exit_error("Error: cannot allocate memory.", &data));
 	if (!start_philos(&data, data.number_of_philos - 1))
 		return (exit_error("Error: cannot start threads.\n", &data));
-	// monitor(data);
 	sem_wait(data.death);
 	free_data(&data);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: hthomas <hthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 18:56:14 by hthomas           #+#    #+#             */
-/*   Updated: 2021/05/20 11:08:05 by hthomas          ###   ########.fr       */
+/*   Updated: 2021/05/20 14:00:16 by hthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@
 # define OUTPUT_SEMAPHORE "output_semaphore"
 # define DEATH_SEMAPHORE "death_semaphore"
 
+typedef int	t_msec;
+
 typedef enum e_message
 {
 	TOOK_FORK,
@@ -37,9 +39,7 @@ typedef enum e_message
 	IS_DEAD
 }	t_message;
 
-struct	s_data;
-
-typedef int	t_msec;
+struct		s_data;
 typedef struct s_philo
 {
 	pthread_t		tid;
@@ -76,7 +76,6 @@ void	release_forks(t_data *data);
 void	take_forks(int philo_number, t_data *data);
 void	display_message(t_data *data, int philo_number,
 			t_message message_type);
-void	monitor(t_data *data);
 void	free_data(t_data *data);
 bool	check_philo(t_philo *philo);
 
