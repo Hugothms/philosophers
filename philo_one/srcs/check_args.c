@@ -6,23 +6,23 @@
 /*   By: hthomas <hthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 20:06:55 by hthomas           #+#    #+#             */
-/*   Updated: 2021/05/03 10:21:30 by hthomas          ###   ########.fr       */
+/*   Updated: 2021/05/21 13:54:43 by hthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_one.h"
 
-static int	is_number(char *str)
+static bool	is_number(char *str)
 {
 	while (*str)
 	{
 		if (*str < '0' || *str++ > '9')
-			return (KO);
+			return (false);
 	}
-	return (OK);
+	return (true);
 }
 
-int	check_args(int argc, char **argv)
+bool	check_args(int argc, char **argv)
 {
 	int	i;
 
@@ -30,8 +30,8 @@ int	check_args(int argc, char **argv)
 	while (i < argc)
 	{
 		if (!is_number(argv[i]))
-			return (KO);
+			return (false);
 		i++;
 	}
-	return (OK);
+	return (true);
 }
