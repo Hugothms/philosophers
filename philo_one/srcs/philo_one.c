@@ -6,7 +6,7 @@
 /*   By: hthomas <hthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/17 20:41:07 by hthomas           #+#    #+#             */
-/*   Updated: 2021/05/18 18:23:46 by hthomas          ###   ########.fr       */
+/*   Updated: 2021/05/21 11:48:09 by hthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static int	start_philos(t_data *data)
 	i = 0;
 	while (i < data->number_of_philos)
 	{
-		data->philos[i].philo_number = i + 1;
+		data->philos[i].philo_number = i;
 		pthread_create(&(data->philos[i].tid), NULL, &philo,
 			&(data->philos[i]));
 		usleep(1000);
