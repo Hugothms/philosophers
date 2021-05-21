@@ -54,3 +54,5 @@ dkms.conf
 philo_one/philo_one
 philo_two/philo_two
 philo_three/philo_three
+.DS_Store
+tests.txt

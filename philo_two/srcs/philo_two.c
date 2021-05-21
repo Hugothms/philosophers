@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo_two.c                                        :+:      :+:    :+:   */
+/*   philo_two.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hthomas <hthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/17 20:41:07 by hthomas           #+#    #+#             */
-/*   Updated: 2021/05/18 12:04:18 by hthomas          ###   ########.fr       */
+/*   Updated: 2021/05/20 13:57:52 by hthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,20 +63,21 @@ static void	*philo(void *philo_v)
 	}
 }
 
-static int	start_philos(t_data *data)
+static bool	start_philos(t_data *data)
 {
 	int	i;
 
 	i = 0;
 	while (i < data->number_of_philos)
 	{
-		data->philos[i].philo_number = i + 1;
-		pthread_create(&(data->philos[i].tid), NULL, &philo,
-			&(data->philos[i]));
+		data->philos[i].philo_number = i;
+		if (pthread_create(&(data->philos[i].tid), NULL, &philo,
+			&(data->philos[i])))
+			return (false);
 		usleep(1000);
 		i++;
 	}
-	return (OK);
+	return (true);
 }
 
 int	main(int argc, char **argv)
@@ -84,17 +85,17 @@ int	main(int argc, char **argv)
 	t_data	data;
 
 	if (argc < 5)
-		return (exit_error("Error: missing argument(s).\n"));
+		return (exit_error("Error: missing argument(s).\n", NULL));
 	if (argc > 6)
-		return (exit_error("Error: too much arguments.\n"));
+		return (exit_error("Error: too much arguments.\n", NULL));
 	if (!check_args(argc, argv))
-		return (exit_error("Error: invalid arguments.\n"));
+		return (exit_error("Error: invalid arguments.\n", NULL));
 	if (!init_data(&data, argc, argv))
-		return (exit_error("Error: cannot allocate memory."));
+		return (exit_error("Error: cannot allocate memory.", &data));
 	if (!start_philos(&data))
-		return (exit_error("Error: cannot start threads.\n"));
+		return (exit_error("Error: cannot start threads.\n", &data));
 	monitor(&data);
-	usleep(10000);
+	usleep(1000);
 	free_data(&data);
 	return (0);
 }

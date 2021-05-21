@@ -6,7 +6,7 @@
 /*   By: hthomas <hthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/25 15:53:40 by hthomas           #+#    #+#             */
-/*   Updated: 2021/05/04 09:36:28 by hthomas          ###   ########.fr       */
+/*   Updated: 2021/05/21 11:27:39 by hthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static int	ft_atoi(const char *str)
 	return (result * sign);
 }
 
-int	init_data(t_data *data, int argc, char **argv)
+bool	init_data(t_data *data, int argc, char **argv)
 {
 	int	i;
 
@@ -66,10 +66,10 @@ int	init_data(t_data *data, int argc, char **argv)
 	sem_unlink(FORK_SEMAPHORE);
 	data->fork = sem_open(FORK_SEMAPHORE, O_CREAT, 0644, data->number_of_philos);
 	if (!data->fork)
-		return (KO);
+		return (false);
 	data->philos = malloc(sizeof(t_philo) * data->number_of_philos);
 	if (data->philos == NULL)
-		return (KO);
+		return (false);
 	i = 0;
 	while (i < data->number_of_philos)
 	{
@@ -78,27 +78,30 @@ int	init_data(t_data *data, int argc, char **argv)
 		sem_unlink(DIE_EAT_SEMAPHORE);
 		data->philos[i].is_dead_or_eating = sem_open(DIE_EAT_SEMAPHORE, O_CREAT, 0644, 1);
 		if (!data->philos[i].is_dead_or_eating)
-			return (KO);
+			return (false);
 		i++;
 	}
 	sem_unlink(OUTPUT_SEMAPHORE);
 	data->output = sem_open(OUTPUT_SEMAPHORE, O_CREAT, 0644, 1);
 	if (!data->output)
-		return (KO);
+		return (false);
 	data->simulation_start = get_total_time();
-	return (OK);
+	return (true);
 }
 
 void	free_data(t_data *data)
 {
 	int	i;
 
-	i = 0;
-	while (i < data->number_of_philos)
-	{
+	if (data->output)
+		sem_close(data->output);
+	if (data->fork)
 		sem_close(data->fork);
-		sem_close(data->philos[i].is_dead_or_eating);
-		i++;
+	if (data->philos)
+	{
+		i = 0;
+		while (i < data->number_of_philos)
+			sem_close(data->philos[i++].is_dead_or_eating);
+		free(data->philos);
 	}
-	free(data->philos);
 }
