@@ -6,7 +6,7 @@
 /*   By: hthomas <hthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/17 20:41:07 by hthomas           #+#    #+#             */
-/*   Updated: 2021/05/20 13:57:52 by hthomas          ###   ########.fr       */
+/*   Updated: 2021/05/21 15:16:42 by hthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,11 @@ static void	philo_sleep(t_philo *philo, int philo_number)
 
 static void	*philo(t_philo *philo)
 {
+	pthread_t	tid;
+
+	if (pthread_create(&tid, NULL, &monitor, philo) != 0)
+		return (NULL);
+	pthread_detach(tid);
 	while (1)
 	{
 		philo_eat(philo->data, philo->philo_number);

@@ -10,7 +10,7 @@ import psutil
 # How many 'long' tests are needed
 N_LONG_TESTS = 3
 # How many seconds must a program run uninterrupted
-LONG_TEST_LENGTH = 40
+LONG_TEST_LENGTH = 10
 
 
 CPU_COUNT = psutil.cpu_count()
@@ -88,7 +88,7 @@ def measure_starvation_timing(binary, array):
 
     # Get the time of death
     last_line = data[data.rfind('\n') + 1:]
-    death_time = int(last_line[:last_line.find(' ')])
+    death_time = int(last_line.split()[0])
     result = death_time - 310
     # Append the delay to the array of results
     array.append(result)

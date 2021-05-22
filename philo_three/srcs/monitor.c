@@ -6,7 +6,7 @@
 /*   By: hthomas <hthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/21 16:25:17 by hthomas           #+#    #+#             */
-/*   Updated: 2021/05/20 13:58:04 by hthomas          ###   ########.fr       */
+/*   Updated: 2021/05/21 19:50:13 by hthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,4 +22,17 @@ bool	check_philo(t_philo *philo)
 		return (false);
 	}
 	return (true);
+}
+
+void	*monitor(void *philo_v)
+{
+	t_philo		*philo;
+
+	philo = (t_philo *)philo_v;
+	while (1)
+	{
+		check_philo(philo);
+		usleep(1000);
+	}
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: hthomas <hthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/25 15:53:40 by hthomas           #+#    #+#             */
-/*   Updated: 2021/05/21 13:53:58 by hthomas          ###   ########.fr       */
+/*   Updated: 2021/05/21 19:48:49 by hthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,28 +87,17 @@ bool	init_data(t_data *data, int argc, char **argv)
 	{
 		ft_bzero(&data->philos[i], sizeof(t_philo));
 		data->philos[i].data = data;
-		sem_unlink(DIE_EAT_SEMAPHORE);
-		data->philos[i].is_dead_or_eating = sem_open(DIE_EAT_SEMAPHORE, O_CREAT,
-				0644, 1);
-		if (!data->philos[i++].is_dead_or_eating)
-			return (false);
+		i++;
 	}
 	return (malloc_semaphores(data));
 }
 
 void	free_data(t_data *data)
 {
-	int	i;
-
 	if (data->output)
 		sem_close(data->output);
 	if (data->fork)
 		sem_close(data->fork);
 	if (data->philos)
-	{
-		i = 0;
-		while (i < data->number_of_philos)
-			sem_close(data->philos[i++].is_dead_or_eating);
 		free(data->philos);
-	}
 }

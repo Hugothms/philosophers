@@ -6,7 +6,7 @@
 /*   By: hthomas <hthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 18:56:14 by hthomas           #+#    #+#             */
-/*   Updated: 2021/05/21 10:54:36 by hthomas          ###   ########.fr       */
+/*   Updated: 2021/05/22 15:59:25 by hthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <stdio.h>
 # include <sys/time.h>
 # include <limits.h>
+# include <fcntl.h>
 
 # define DIE_EAT_SEMAPHORE "die_eat_semaphore"
 # define FORK_SEMAPHORE "fork_semaphore"
@@ -46,7 +47,6 @@ typedef struct s_philo
 	int				number_of_meal;
 	t_msec			time_last_meal_started;
 	bool			is_dead;
-	sem_t			*is_dead_or_eating;
 	struct s_data	*data;
 }	t_philo;
 
