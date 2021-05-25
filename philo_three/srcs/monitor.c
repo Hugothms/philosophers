@@ -6,7 +6,7 @@
 /*   By: hthomas <hthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/21 16:25:17 by hthomas           #+#    #+#             */
-/*   Updated: 2021/05/22 16:18:45 by hthomas          ###   ########.fr       */
+/*   Updated: 2021/05/24 07:24:57 by hthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,12 @@ bool	check_philo(t_philo *philo)
 		sem_post(philo->data->death);
 		return (false);
 	}
+	if (philo->data->number_must_eat != 0
+		&& philo->number_of_meal == philo->data->number_must_eat)
+	{
+		sem_post(philo->data->eat_enough);
+		return (false);
+	}
 	return (true);
 }
 
@@ -31,7 +37,8 @@ void	*monitor(void *philo_v)
 	philo = (t_philo *)philo_v;
 	while (1)
 	{
-		check_philo(philo);
+		if (!check_philo(philo))
+			break;
 		usleep(1000);
 	}
 	return (0);

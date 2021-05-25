@@ -6,7 +6,7 @@
 /*   By: hthomas <hthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/25 15:53:40 by hthomas           #+#    #+#             */
-/*   Updated: 2021/05/20 14:03:29 by hthomas          ###   ########.fr       */
+/*   Updated: 2021/05/24 07:17:04 by hthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,11 @@ bool	malloc_semaphores(t_data *data)
 	if (!data->death)
 		return (false);
 	data->simulation_start = get_total_time();
+	sem_unlink(EAT_SEMAPHORE);
+	data->eat_enough = sem_open(EAT_SEMAPHORE, O_CREAT, 0644, 0);
+	if (!data->eat_enough)
+		return (false);
+	data->simulation_start = get_total_time();
 	return (true);
 }
 
@@ -113,6 +118,7 @@ void	free_data(t_data *data)
 		sem_close(data->philo->is_dead_or_eating);
 		sem_close(data->output);
 		sem_close(data->death);
+		sem_close(data->eat_enough);
 		i++;
 	}
 	free(data->philo);

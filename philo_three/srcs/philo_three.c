@@ -6,7 +6,7 @@
 /*   By: hthomas <hthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/17 20:41:07 by hthomas           #+#    #+#             */
-/*   Updated: 2021/05/22 16:19:22 by hthomas          ###   ########.fr       */
+/*   Updated: 2021/05/24 07:32:27 by hthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,13 @@ static void	*philo(t_philo *philo)
 			&& philo->number_of_meal == philo->data->number_must_eat)
 		{
 			sem_post(philo->data->death);
+			printf("philo %d ate enough\n", philo->philo_number);
 			return (NULL);
 		}
 		philo_sleep(philo, philo->philo_number);
 		display_message(philo->data, philo->philo_number, IS_THINKING);
 	}
+	printf("philo %d MMMMMMMMMMMMMMMM\n", philo->philo_number);
 }
 
 static bool	start_philos(t_data *data, int count)
@@ -84,9 +86,28 @@ static bool	start_philos(t_data *data, int count)
 	return (true);
 }
 
+void	*monitor_eat_enough(void *data_v)
+{
+	t_data	*data;
+	int		i;
+
+	data = data_v;
+	i = 0;
+	while(i < data->number_of_philos)
+	{
+		sem_wait(data->eat_enough);
+		printf("monitor_eat_enough %d\n", i);
+		i++;
+	}
+	sem_post(data->death);
+	printf("DONE monitor_eat_enough\n");
+	return (0);
+}
+
 int	main(int argc, char **argv)
 {
 	t_data	data;
+	pthread_t	tid;
 
 	if (argc < 5)
 		return (exit_error("Error: missing argument(s).\n", NULL));
@@ -98,9 +119,13 @@ int	main(int argc, char **argv)
 		return (exit_error("Error: cannot allocate memory.", &data));
 	if (!start_philos(&data, data.number_of_philos - 1))
 		return (exit_error("Error: cannot start threads.\n", &data));
-	while (data.number_of_philos-- > 1)
-		sem_wait(data.death);
-	sem_wait(data.output);
+	printf("main ===========%d\n", data.number_of_philos);
+	if (pthread_create(&tid, NULL, &monitor_eat_enough, &data) != 0)
+		return (1);
+	// pthread_detach(tid);
+	sem_wait(data.death);
+	// usleep(10000);
 	free_data(&data);
+	pthread_kill(tid, 0);
 	return (0);
 }

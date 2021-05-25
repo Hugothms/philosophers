@@ -6,7 +6,7 @@
 /*   By: hthomas <hthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 18:56:14 by hthomas           #+#    #+#             */
-/*   Updated: 2021/05/22 15:59:35 by hthomas          ###   ########.fr       */
+/*   Updated: 2021/05/24 07:16:44 by hthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 # define FORK_SEMAPHORE "fork_semaphore"
 # define OUTPUT_SEMAPHORE "output_semaphore"
 # define DEATH_SEMAPHORE "death_semaphore"
+# define EAT_SEMAPHORE "eat_semaphore"
 
 typedef int	t_msec;
 
@@ -64,6 +65,7 @@ typedef struct s_data
 	sem_t			*fork;
 	sem_t			*output;
 	sem_t			*death;
+	sem_t			*eat_enough;
 	t_msec			simulation_start;
 }	t_data;
 
@@ -79,6 +81,7 @@ void	display_message(t_data *data, int philo_number,
 			t_message message_type);
 void	free_data(t_data *data);
 bool	check_philo(t_philo *philo);
+void	*somebody_died(void *philo_v);
 void	*monitor(void *philo_v);
 
 #endif
