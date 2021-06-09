@@ -57,3 +57,4 @@ philo_three/philo_three
 .DS_Store
 tests.txt
 test_output/*
+philo/philo
