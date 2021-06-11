@@ -6,7 +6,7 @@
 /*   By: hthomas <hthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/17 20:41:07 by hthomas           #+#    #+#             */
-/*   Updated: 2021/06/09 07:50:49 by hthomas          ###   ########.fr       */
+/*   Updated: 2021/06/11 14:45:10 by hthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ static bool	start_philos(t_data *data)
 {
 	int	i;
 
+	if (data->number_of_philos <= 1)
+		return (true);
 	i = 0;
 	while (i < data->number_of_philos)
 	{
@@ -94,7 +96,10 @@ int	main(int argc, char **argv)
 		return (exit_error("Error: cannot allocate memory.", &data));
 	if (!start_philos(&data))
 		return (exit_error("Error: cannot start threads.\n", &data));
-	monitor(&data);
+	if (data.number_of_philos > 1)
+		monitor(&data);
+	else
+		printf("0\t1 died\n");
 	usleep(1000);
 	free_data(&data);
 	return (0);
