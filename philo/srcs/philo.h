@@ -6,7 +6,7 @@
 /*   By: hthomas <hthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 18:56:14 by hthomas           #+#    #+#             */
-/*   Updated: 2021/06/09 08:06:14 by hthomas          ###   ########.fr       */
+/*   Updated: 2021/06/16 15:09:10 by hthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,16 @@
 # include <stdio.h>
 # include <sys/time.h>
 # include <limits.h>
+
+# define BLACK "\033[30m"
+# define RED "\033[31m"
+# define GREEN "\033[32m"
+# define YELLOW "\033[33m"
+# define ORANGE "\033[34m"
+# define PURPLE "\033[35m"
+# define CYAN "\033[36m"
+# define WHITE "\033[37m"
+# define NC "\033[0m"
 
 # define DIE_EAT_SEMAPHORE "die_eat_semaphore"
 # define FORK_SEMAPHORE "fork_semaphore"
@@ -47,7 +57,6 @@ typedef struct s_philo
 	t_msec			time_last_meal_started;
 	bool			is_dead;
 	pthread_mutex_t	fork;
-	pthread_mutex_t	is_dead_or_eating;
 	struct s_data	*data;
 }	t_philo;
 
