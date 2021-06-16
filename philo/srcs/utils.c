@@ -6,7 +6,7 @@
 /*   By: hthomas <hthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/25 15:53:40 by hthomas           #+#    #+#             */
-/*   Updated: 2021/06/09 07:50:14 by hthomas          ###   ########.fr       */
+/*   Updated: 2021/06/16 15:18:42 by hthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ bool	malloc_mutexes(t_data *data)
 		ft_bzero(&data->philos[i], sizeof(t_philo));
 		data->philos[i].data = data;
 		pthread_mutex_init(&data->philos[i].fork, NULL);
-		pthread_mutex_init(&data->philos[i].is_dead_or_eating, NULL);
 		i++;
 	}
 	pthread_mutex_init(&data->output, NULL);
@@ -89,13 +88,12 @@ void	free_data(t_data *data)
 {
 	int	i;
 
-	if (data->philos)
+	if (data && data->philos)
 	{
 		i = 0;
 		while (i < data->number_of_philos)
 		{
 			pthread_mutex_destroy(&data->philos[i].fork);
-			pthread_mutex_destroy(&data->philos[i].is_dead_or_eating);
 			i++;
 		}
 		pthread_mutex_destroy(&data->output);
