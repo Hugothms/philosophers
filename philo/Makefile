@@ -6,7 +6,7 @@
 #    By: hthomas <hthomas@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/08 17:53:33 by hthomas           #+#    #+#              #
-#    Updated: 2021/06/16 17:43:37 by hthomas          ###   ########.fr        #
+#    Updated: 2021/06/22 16:48:30 by hthomas          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,8 +19,8 @@ SHELL	=		/bin/sh
 CC		=		clang
 RM		=		rm -f
 
-CFLAGS	=		#-Wall -Wextra -Werror
-LDFLAGS	=		#-fsanitize=address -g3
+CFLAGS	=		-Wall -Wextra -Werror
+LDFLAGS	=		#-fsanitize=thread -g3
 THREADFLAGS	=	-pthread
 
 SRCSDIR	=		srcs/

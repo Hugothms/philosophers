@@ -6,7 +6,7 @@
 /*   By: hthomas <hthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/25 15:53:40 by hthomas           #+#    #+#             */
-/*   Updated: 2021/06/16 15:18:42 by hthomas          ###   ########.fr       */
+/*   Updated: 2021/06/22 16:43:16 by hthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ bool	init_data(t_data *data, int argc, char **argv)
 	data->time_to_die = ft_atoi(argv[2]);
 	data->time_to_eat = ft_atoi(argv[3]);
 	data->time_to_sleep = ft_atoi(argv[4]);
+	data->is_dead = false;
 	if (argc == 6)
 		data->number_must_eat = ft_atoi(argv[5]);
 	else
@@ -94,9 +95,11 @@ void	free_data(t_data *data)
 		while (i < data->number_of_philos)
 		{
 			pthread_mutex_destroy(&data->philos[i].fork);
+			pthread_join(data->philos[i].tid, NULL);
 			i++;
 		}
 		pthread_mutex_destroy(&data->output);
-		free(data->philos);
+		if (data->philos)
+			free(data->philos);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: hthomas <hthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 18:56:14 by hthomas           #+#    #+#             */
-/*   Updated: 2021/06/16 15:17:52 by hthomas          ###   ########.fr       */
+/*   Updated: 2021/06/22 16:03:42 by hthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ typedef struct s_philo
 	int				philo_number;
 	int				number_of_meal;
 	t_msec			time_last_meal_started;
-	bool			is_dead;
 	pthread_mutex_t	fork;
 	struct s_data	*data;
 }	t_philo;
@@ -70,6 +69,7 @@ typedef struct s_data
 	t_philo			*philos;
 	pthread_mutex_t	output;
 	t_msec			simulation_start;
+	bool			is_dead;
 }	t_data;
 
 int		exit_error(const char *str, t_data *data);
